@@ -11,7 +11,7 @@ def main():
     client = genai.Client(api_key=api_key)
 
     model = "gemini-2.0-flash-001"
-    if sys.argv[1]:
+    if len(sys.argv) > 1:
         user_prompt = sys.argv[1]
     else:
         print("Put a prompt after the name of the script!")
