@@ -2,6 +2,7 @@ import unittest
 from functions.get_files_info import get_files_info
 from functions.get_files_content import get_files_content
 from functions.write_file import write_file
+from functions.run_python_file import run_python_file
 
 """
 class TestGetFilesInfo(unittest.TestCase):
@@ -60,7 +61,7 @@ class TestGetFilesContent(unittest.TestCase):
         result = get_files_content("calculator", "pkg/file_does_not_exist.py")
         print(result)
         self.assertTrue(f'Error: ' in result)
-"""
+
 
 class TestWriteToFile(unittest.TestCase):
     def test_lorem(self):
@@ -80,6 +81,44 @@ class TestWriteToFile(unittest.TestCase):
         result = write_file("calculator", "/tmp/temp.txt", "this should not be allowed")
         print(result)
         self.assertTrue(f'Error:' in result)
+"""
+
+class TestRunPythonFile(unittest.TestCase):
+    def test_main(self):
+        print(f'\nResult for "main.py" file:')
+        result = run_python_file("calculator", "main.py")
+        print(result)
+        self.assertTrue("Usage:" in result)
+
+    def test_main_with_args(self):
+        print(f'\nResult for "main.py 3 + 5" file:')
+        result = run_python_file("calculator", "main.py", ["3 + 5"])
+        print(result)
+        self.assertTrue("8" in result)
+
+    def test_tests(self):
+        print(f'\nResult for "tests.py" file:')
+        result = run_python_file("calculator", "tests.py")
+        print(result)
+        self.assertTrue("Ran 9 tests" in result)
+    
+    def test_main_out_of_directory(self):
+        print(f'\nResult for "../main.py" file:')
+        result = run_python_file("calculator", "../main.py")
+        print(result)
+        self.assertTrue("Error:" in result)
+
+    def test_nonexistent(self):
+        print(f'\nResult for "nonexistent.py" file:')
+        result = run_python_file("calculator", "nonexistent.py")
+        print(result)
+        self.assertTrue("Error:" in result)
+
+    def test_txt(self):
+        print(f'\nResult for "lorem.txt" file:')
+        result = run_python_file("calculator", "lorem.txt")
+        print(result)
+        self.assertTrue("Error:" in result)
 
 if __name__ == "__main__":
     unittest.main()
