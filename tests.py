@@ -1,6 +1,7 @@
 import unittest
 from functions.get_files_info import get_files_info
 from functions.get_files_content import get_files_content
+from functions.write_file import write_file
 
 """
 class TestGetFilesInfo(unittest.TestCase):
@@ -33,7 +34,7 @@ class TestGetFilesInfo(unittest.TestCase):
         result = get_files_info("calculator", "calculator")
         print(result)
         self.assertTrue('Error:' in result)
-"""
+
 
 class TestGetFilesContent(unittest.TestCase):
     def test_main(self):
@@ -59,7 +60,26 @@ class TestGetFilesContent(unittest.TestCase):
         result = get_files_content("calculator", "pkg/file_does_not_exist.py")
         print(result)
         self.assertTrue(f'Error: ' in result)
+"""
 
+class TestWriteToFile(unittest.TestCase):
+    def test_lorem(self):
+        print(f'\nResult for "lorem.txt" file:')
+        result = write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum")
+        print(result)
+        self.assertTrue(f'28 characters written' in result)
+
+    def test_lorem_in_dir(self):
+        print(f'\nResult for "pkg/morelorem.txt" file:')
+        result = write_file("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet")
+        print(result)
+        self.assertTrue(f'26 characters written' in result)
+    
+    def test_invalid(self):
+        print(f'\nResult for "/tmp/temp.txt" file:')
+        result = write_file("calculator", "/tmp/temp.txt", "this should not be allowed")
+        print(result)
+        self.assertTrue(f'Error:' in result)
 
 if __name__ == "__main__":
     unittest.main()
